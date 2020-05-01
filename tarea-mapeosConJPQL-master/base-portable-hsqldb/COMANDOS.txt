@@ -1,0 +1,45 @@
+
+=================================================================================================
+                              ARRANCAR EL SERVIDAOR HSQLDB   
+=================================================================================================
+# EJECUTAR EL SIGUIENTE COMANDO DENTRO DE LA CARPETA "base-portable-hsqdlb" (esta carpeta)
+
+java  -cp hsqldb-2.5.0.jar org.hsqldb.server.Server --props ./server.properties
+
+=================================================================================================
+                              DETENER EL SERVIDOR HSQLDB   
+=================================================================================================
+Simplemente presione Ctrl + C en la terminal donde haya arrancado el servidor
+
+
+=================================================================================================
+                   ARRANCAR EL CLIENTE DE CONSULTAS POR LINEA DE COMANDOS               
+=================================================================================================
+# PREVIAMENTE, DEBE HABER ARRANCADO EL SERVIDOR HSQLDB
+
+java -jar sqltool-2.5.0.jar --autoCommit --inlineRc=url=jdbc:hsqldb:hsql://localhost:9001/pruebasdb,password=,user=sa
+
+#Nota: para salir de la línea de comandos escriba \q
+
+
+=================================================================================================
+                                 INICIALIZAR BASE DE DATOS 
+=================================================================================================
+# - PREVIAMENTE, DEBE HABER ARRANCADO EL SERVIDOR HSQLDB
+# - EJECUTAR LA SIGUIENTE LINEA EN EL CLIENTE DE CONSULTAS POR LINEA DE COMANDOS
+
+\i inicializar-base.sql
+
+
+=================================================================================================
+                                 BORRAR BASE DE DATOS
+=================================================================================================
+# - Detenga el servidor de HSQLDB 
+# - Simplemente elimine la carpeta "pruebasdb" que se crea dentro de la carpeta "base-portable-hsqdlb" (esta carpeta)
+
+
+
+=================================================================================================
+                   ARRANCAR EL CLIENTE DE CONSULTAS GRÁFICO
+=================================================================================================
+java -cp hsqldb-2.5.0.jar org.hsqldb.util.DatabaseManagerSwing --driver org.hsqldb.jdbcDriver --URL jdbc:hsqldb:hsql://localhost/pruebasdb --user "sa" --password ""

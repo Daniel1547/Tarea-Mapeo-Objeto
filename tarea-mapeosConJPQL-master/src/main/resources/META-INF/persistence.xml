@@ -1,0 +1,84 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                                     http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">	
+    
+    <persistence-unit name="base-pruebas">
+        <!-- indicamos que usamos a Hibernate como proveedor de JPA 2 -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <!-- la siguiente es la configuracion mas simple para conectarse a una base de datos (VIA JDBC DRIVER) -->			
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost:9001/pruebasdb" />
+            <!-- usuario que se va usar para conectarse a la base, en HSQLDB hay un usuario llamado "sa" -->
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <!-- password del usuario de la base de datos, eh HSQLDB el password es vacio -->
+            <property name="javax.persistence.jdbc.password" value="" />
+
+            <!-- MUY IMPORTANTE: INDICAR SIEMRPE EL DIALECTO PARA EL PROVEEDOR -->
+            <!-- EL DIALECTO ES EL SQL DE LA BASE QUE ESTAMOS USANDO, en este caso HSQLDB -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
+            <!-- show_sql es para mostrar el sql generado por hibernate -->
+            <property name="hibernate.show_sql" value="true" />
+
+        </properties>
+    </persistence-unit>       
+    
+    <persistence-unit name="base-pruebas-memoria">
+        <!-- indicamos que usamos a Hibernate como proveedor de JPA 2 -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:demodb" />
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="" />
+            
+            <!-- configuracion para crear base de datos al arrancar -->
+            <property name="hibernate.hbm2ddl.import_files_sql_extractor" value="org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor" />
+
+            <property name="javax.persistence.schema-generation.database.action"
+                      value="create" />
+            <property name="javax.persistence.schema-generation.create-script-source"
+                      value="META-INF/inicializar-base.sql" />
+
+            <!-- el dialecto le indica a hibernate como debe generar SQL -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
+            <property name="hibernate.show_sql" value="true" />
+        </properties>
+    </persistence-unit>
+
+
+    <!-- CUIDADO,ESTA CONFGURACION SE CONECTA A LA BASE DE VERDAD LA DESTRUYE Y LA VUELVE A CREAR-->
+    <persistence-unit name="base-pruebas-deshacer-crear">
+        <!-- indicamos que usamos a Hibernate como proveedor de JPA 2 -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <!-- la siguiente es la configuracion mas simple para conectarse a una base de datos (VIA JDBC DRIVER) -->			
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost:9001/pruebasdb" />
+            <!-- usuario que se va usar para conectarse a la base, en HSQLDB hay un usuario llamado "sa" -->
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <!-- password del usuario de la base de datos, eh HSQLDB el password es vacio -->
+            <property name="javax.persistence.jdbc.password" value="" />
+            
+            <!-- configuracion para crear base de datos al arrancar -->
+            <property name="hibernate.hbm2ddl.import_files_sql_extractor" value="org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor" />
+
+            <property name="javax.persistence.schema-generation.database.action"
+                      value="drop-and-create" />
+            <property name="javax.persistence.schema-generation.create-script-source"
+                      value="META-INF/inicializar-base.sql" />
+            <property name="javax.persistence.schema-generation.drop-script-source"
+                      value="META-INF/destruir-base.sql" />
+
+   
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
+            <!-- show_sql es para mostrar el sql generado por hibernate -->
+            <property name="hibernate.show_sql" value="true" />
+
+        </properties>
+    </persistence-unit> 
+    
+    
+</persistence>
